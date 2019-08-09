@@ -1,18 +1,18 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres
-  password: hahaha123
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
   pool: 5
   timeout: 5000
-  host: localhost
-  port: 5432
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
 development:
   <<: *default
-  database: a_toy_app_development
+  database: <%= ENV['DB_DEVELOPMENT'] %>
 test:
   <<: *default
-  database: a_toy_app_test_development
+  database: <%= ENV['DB_TEST'] %>
 production:
   <<: *default
-  database: a_toy_app_production_development
+  database: <%= ENV['DB_PRODUCTION'] %>
