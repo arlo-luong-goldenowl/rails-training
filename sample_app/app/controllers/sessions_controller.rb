@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: email)
     if(user && user.authenticate(password))
       log_in(user)
+      flash[:success] = "Login successfully, Welcome to the Sample App!"
       redirect_to user
     else
       flash.now[:danger] = 'Invalid password'

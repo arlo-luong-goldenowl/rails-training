@@ -16,8 +16,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)    # Not the final implementation!
     @user.password_digest = User.digest(user_params[:password])
     if @user.save
-      login(@user)
-      flash[:success] = "Welcome to the Sample App!"
+      log_in(@user)
+      flash[:success] = "Create account successfully, Welcome to the Sample App!"
       redirect_to @user
     else
       render 'new'
