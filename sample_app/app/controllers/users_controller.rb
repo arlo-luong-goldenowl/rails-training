@@ -1,15 +1,22 @@
 class UsersController < ApplicationController
   def new
     if current_user
+      puts " CURRENT "
       flash[:warning] = "Already logged"
-      redirect_to current_user
+      redirect_to '/profile'
     else
+      puts " KHONG CO"
       @user = User.new
     end
   end
 
-  def show
-    @user = User.find(params[:id])
+  # def show
+    # @user = User.find(params[:id])
+  # end
+
+  def profile
+    @user = User.find(current_user.id)
+    render 'show'
   end
 
   def create
@@ -18,7 +25,7 @@ class UsersController < ApplicationController
     if @user.save
       log_in(@user)
       flash[:success] = "Create account successfully, Welcome to the Sample App!"
-      redirect_to @user
+      redirect_to '/profile'
     else
       render 'new'
     end

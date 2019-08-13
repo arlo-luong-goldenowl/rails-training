@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
   def new
+    if current_user
+      flash[:warning] = "Already logged"
+      redirect_to '/profile'
+    end
   end
 
   def create
@@ -8,8 +12,9 @@ class SessionsController < ApplicationController
     user = User.find_by(email: email)
     if(user && user.authenticate(password))
       log_in(user)
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       flash[:success] = "Login successfully, Welcome to the Sample App!"
-      redirect_to user
+      redirect_to '/profile'
     else
       flash.now[:danger] = 'Invalid password'
       render 'new'
@@ -17,7 +22,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_url
   end
 
