@@ -1,2 +1,12 @@
-<%= @user.email %>
-<%= @user.name %>
+<p>
+  <strong>Email: </strong>
+  <%= @user.email %>
+</p>
+<p>
+  <strong>Name: </strong>
+  <%= @user.name %>
+</p>
+<p>
+  <strong>Avatar: </strong>
+  <%= gravatar_for @user, size: 50 %>
+</p>

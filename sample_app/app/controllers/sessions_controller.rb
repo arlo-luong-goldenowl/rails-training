@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   def new
     if current_user
       flash[:warning] = "Already logged"
-      redirect_to '/profile'
+      redirect_to current_user
     end
   end
 
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       log_in(user)
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       flash[:success] = "Login successfully, Welcome to the Sample App!"
-      redirect_to '/profile'
+      redirect_back_or user
     else
       flash.now[:danger] = 'Invalid password'
       render 'new'
