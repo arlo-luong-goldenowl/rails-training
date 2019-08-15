@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :show, :setting, :update_info]
-  before_action :correct_user,   only: [:show, :update_info]
+  before_action :correct_user,   only: [:show]
   before_action :admin_user,     only: :destroy
 
   # Sign up user GET
