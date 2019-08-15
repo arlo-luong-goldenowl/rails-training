@@ -18,22 +18,22 @@ class UsersController < ApplicationController
     @user = User.new(user_params)    # Not the final implementation!
     @user.password_digest = User.digest(user_params[:password])
     if @user.save
-      log_in(@user)
-      flash[:success] = "Create account successfully, Welcome to the Sample App!"
-      redirect_to '/setting'
+      @user.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new'
     end
   end
 
   def index
-    @users = User.paginate(page: params[:page])
-    # @users = User.all
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   # user profile infomation
   def show
     @user = User.find(params[:id])
+    redirect_to root_url
   end
 
   # user setting
